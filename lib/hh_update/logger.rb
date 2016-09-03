@@ -5,5 +5,10 @@ module HHUpdate
   end
 end
 
-$logger = HHUpdate::Logger.new(ENV['LOG_FILE'])
+log_file = begin
+  Module.const_get(ENV['LOG_FILE'])
+rescue NameError
+  ENV['LOG_FILE']
+end
+$logger = HHUpdate::Logger.new(log_file)
 $logger.level = Module.const_get(['Logger', ENV['LOG_LEVEL']].join('::'))
