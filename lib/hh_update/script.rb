@@ -5,7 +5,9 @@ module HHUpdate
     end
 
     def call
+      $logger.info('start')
       update_resumes
+      $logger.info('done')
     end
 
     private
