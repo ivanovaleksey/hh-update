@@ -19,15 +19,18 @@ module HHUpdate
     end
 
     def update_resume(id)
+      $logger.debug('update resume %s' % id)
       path = '/resumes/%s/publish' % id
-      resp = conn.post(path)
+      conn.post(path).tap do |resp|
+        $logger.debug(resp)
+      end
     end
 
     private
 
     def conn
       @conn ||= Faraday.new(url: HOST) do |faraday|
-        faraday.use Faraday::Response::Logger
+        # faraday.use Faraday::Response::Logger
         faraday.headers['Authorization'] = auth_header
         faraday.adapter Faraday.default_adapter
       end
