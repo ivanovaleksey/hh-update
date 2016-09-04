@@ -11,10 +11,12 @@ module HHUpdate
       jsonify(conn.get('me'))
     end
 
-    def resume_ids
+    def resumes
       resp = conn.get('resumes/mine')
       jsonify(resp) do |json|
-        json['items'].map { |item| item['id'] }
+        json['items'].map do |item|
+          { id: item['id'], title: item['title'], url: item['alternate_url'] }
+        end
       end
     end
 

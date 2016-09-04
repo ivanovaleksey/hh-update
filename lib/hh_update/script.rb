@@ -2,6 +2,7 @@ module HHUpdate
   class Script
     def initialize
       @api = API.instance
+      @notifier = Notifier.instance
     end
 
     def call
@@ -13,8 +14,9 @@ module HHUpdate
     private
 
     def update_resumes
-      @api.resume_ids.each do |id|
-        @api.update_resume(id)
+      @api.resumes.each do |resume|
+        resp = @api.update_resume resume[:id]
+        @notifier.success(resume) if resp.status == 204
       end
     end
   end
