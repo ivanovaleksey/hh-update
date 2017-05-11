@@ -9,6 +9,5 @@ set :output, File.join(path, 'log/cron.log')
 set :frequency, ENV['FREQUENCY'].to_i
 
 every frequency.hours do
-  # with rbenv it should be -c 'export PATH="$HOME/.rbenv/bin:$PATH"; eval "$(rbenv init -)"; ...'
-  script 'bin/script'
+  script 'rbenv exec bundle exec ./bin/script'
 end
